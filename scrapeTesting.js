@@ -57,11 +57,11 @@ scrape().then((data) => {
 
 // #e83d3fa5015adffc0a615bd22b > div.product-image > a > img
 
-// const result = await page.evaluate(() => {
-//   let foo = Array.from(document.querySelectorAll('.product-tile'))
-//   let idArray = foo.map(elem => elem.getAttribute("id"))
-//   return idArray
-// })
+const result = await page.evaluate(() => {
+  let foo = Array.from(document.querySelectorAll('.product-tile'))
+  let idArray = foo.map(elem => elem.getAttribute("id"))
+  return idArray
+})
 
 // page.click(`#${idArray[0]} > div.product-image > a > img`)
 // await page.waitFor(2000)

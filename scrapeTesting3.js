@@ -2,6 +2,7 @@
 /* eslint-env browser */
 /* eslint no-await-in-loop: 0 */
 
+
 const puppeteer = require(`puppeteer`);
 const fs = require(`fs`);
 

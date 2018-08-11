@@ -1,1 +1,7 @@
 ./node_modules
+./aritziaItems.json
+./items.json
+./scrape.js
+./scrapeTesting.js
+./scrapeTesting2.js
+./scrapeTesting3.js

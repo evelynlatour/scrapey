@@ -6,38 +6,34 @@
 const puppeteer = require(`puppeteer`);
 // Make console messages look nice
 const chalk = require(`chalk`);
-// const fs = require(`fs`);
+
 
 const unwantedCartUrl = `https://www.aritzia.com/us/en/cart`;
-const scrollDelayDefault = 1000;
+const scrollDelay = 1000;
 const noItemsFoundTimeout = 5000;
 
 // grabs urls of all products loaded onto the DOM
 const getVisibleEntries = async page =>
   page.$$eval(`.product-image > a`, elemArray => elemArray.map(elem => elem.getAttribute(`href`)));
 
-async function scrapeInfiniteScrollItems(
-  page,
-  numberOfItems,
-  scrollDelay = scrollDelayDefault,
-) {
+async function scrapeInfiniteScrollItems(page, numberOfItems) {
   let items = [];
   let itemsLength = items.length;
-  try {
-    /*
-    In case there are not enough items that exist that you are looking for
-    This code will check to see if no new items are being found and if there are none
-    Then it will kill the process and exit with the items that ARE found
-    */
-    this.interval = setInterval(() => {
-      if (items.length !== itemsLength) {
-        itemsLength = items.length;
-      } else {
-        console.info(chalk.red(`No new items were found after the set interval check ran, exiting`));
-        process.exit({ items, page, numberOfItems });
-      }
-    }, noItemsFoundTimeout);
+  /*
+  In case there are not enough items that exist that you specified to find, setInterval
+  checks to see if array is being updated/changed every 5 seconds. If not, will kill process.
+  (does NOT currently exit with the items that ARE found)
+  */
+  const interval = setInterval(() => {
+    if (items.length !== itemsLength) {
+      itemsLength = items.length;
+    } else {
+      console.info(chalk.red(`No new items were found after the set interval check ran, exiting`));
+      process.exit({ items, page, numberOfItems });
+    }
+  }, noItemsFoundTimeout);
 
+  try {
     while (items.length < numberOfItems) {
       console.log(chalk.magenta(`Searching for items...`));
       items = await getVisibleEntries(page);
@@ -60,8 +56,8 @@ async function scrapeInfiniteScrollItems(
   }
 
   // Remove the interval so that it does not accidentally fire once we have
-  // cmpleted looking for items
-  clearInterval(this.interval);
+  // completed looking for items
+  clearInterval(interval);
   return items
     .filter(item => item !== unwantedCartUrl)
     .slice(0, numberOfItems);
@@ -76,7 +72,7 @@ const getPage = async ({ numberOfItems }) => {
   return { page, items };
 };
 
-const scrapeItems = async ({ page, items, numberOfItems }) => {
+const scrapeItems = async ({ page, items }) => {
   const resultArray = [];
   console.info(chalk.cyan(`Starting scraping for individual items:`));
 
@@ -84,25 +80,33 @@ const scrapeItems = async ({ page, items, numberOfItems }) => {
     console.info(chalk.green(`Starting scrape for ${url}`));
     await page.goto(url, { waitUntil: `domcontentloaded` });
     const data = await page.evaluate(async () => {
-      const name = document.querySelector(`.pdp-product-name`).innerText;
-      const brand = document.querySelector(`.pdp-product-brand`).innerText;
-      const desc = document.querySelector(`.pdp-short-description`).innerText;
+      const brand = (document.querySelector(`.pdp-product-brand`) || {}).innerText;
+      const name = (document.querySelector(`.pdp-product-name`) || {}).innerText;
+      const desc = document.querySelector(`.pdp-short-description`).innerText.replace(/(\r\n\t|\n|\r\t)/gm, ``);
+      const notes = document.querySelector(`#pdp-designer-notes > .pdp-tab-content`).innerText.replace(/(\r\n\t|\n|\r\t)/gm, ``);
       const fit = document.querySelector(`.fit`).innerText;
+      const allImageURLs = Array.from(document.querySelectorAll(`.pdp-image`)).map(({ href }) => href);
+      const imageURLs = allImageURLs.map((href, idx) => ((idx === 0 || idx === allImageURLs.length - 1) ? href : null)).filter(item => !!item);
+      const colors = Array.from(document.querySelectorAll(`.swatchanchor`)).map(({ title }) => title); // .map(item => item.title)
+      const features = Array.from(document.querySelector(`.pdp-tab-content > ul`).getElementsByTagName(`li`)).map(item => item.innerText); // NEED TO SELECT THE CHILD
 
-      const dataObj = {
-        name,
+      return {
         brand,
+        name,
         desc,
         fit,
+        notes,
+        colors,
+        features,
+        imageURLs,
       };
-      console.log(dataObj);
       return dataObj;
     });
     console.info(chalk.cyan(`Finished scrape for ${url}`));
     resultArray.push(data);
   }
 
-  console.log(chalk.blue(`Finished gather ALL of the data`));
+  console.log(chalk.blue(`Finished gathering ALL of the data`));
   return resultArray;
 };
 
@@ -113,28 +117,13 @@ const scrape = async ({ numberOfItems }) => {
   return scrapeItems({ page, items, numberOfItems });
 };
 
+module.exports = scrape;
 
-scrape({ numberOfItems: 5 }).then((items) => {
-  console.info(chalk.magenta(`Success`));
-  console.info(chalk.magenta(`There are ${items.length} items:`));
-  console.info(chalk.green(JSON.stringify(items)));
-
-  /** ************
-
-  TODO: Save the items here - there is some code below that does this locally but you prob want
-  to do this In a DB somewhere
-  const dataToSave = JSON.stringify(resultArray);
-  await fs.writeFileSync(`./items.json`, dataToSave, `utf8`);
-
-  *************** */
-  process.exit();
-});
-
-process.on(`exit`, async ({ items = [], page = {}, numberOfItems = 0 }) => {
-  // console.info(chalk.red(`Process completed or timed out after not enough items being found...`));
-  // console.info(chalk.red(`Requested ${numberOfItems} but only found ${items.length} items`));
-  // if (items.length > 0) {
-  /** ************
+// process.on(`exit`, async ({ items = [], page = {}, numberOfItems = 0 }) => {
+// console.info(chalk.red(`Process completed or timed out after not enough items being found...`));
+// console.info(chalk.red(`Requested ${numberOfItems} but only found ${items.length} items`));
+// if (items.length > 0) {
+/** ************
     TODO: There were not enough items found matching the number of items that the user requested
     BUT we did find at least SOME items. In this case we want to still save these items, do that
     here
@@ -147,5 +136,5 @@ process.on(`exit`, async ({ items = [], page = {}, numberOfItems = 0 }) => {
     console.info(itemsData);
 
     *************** */
-  // }
-});
+// }
+// });

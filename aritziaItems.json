@@ -1,0 +1,94 @@
+[
+  {
+    "brand": "Babaton",
+    "name": "Rena Shirt",
+    "desc": "Familiar silhouette, new fabric",
+    "fit": "Fit: Relaxed — an easy shape that's just shy of loose",
+    "notes":
+      "This matte satin blouse has an effortless, unstructured shape that looks inherently feminine. A soft collar and scalloped seams up the back of the arms add to the nonchalant feel.Styled with Babaton Lucero Pant.",
+    "colors": ["ESPACE/BLACK", "BLACK/ESPACE", "NUTMEG/ESPACE"],
+    "features": [
+      "Fit: Relaxed — an easy shape that's just shy of loose",
+      "Model is\n5'11/180\nwearing a size\nS\n"
+    ],
+    "imageURLs": [
+      "https://aritzia.scene7.com/is/image/Aritzia/hi-res/s18_01_a02_63300_3538_on_a.jpg",
+      "https://aritzia.scene7.com/is/image/Aritzia/hi-res/s18_01_a02_63300_3538_off_a.jpg"
+    ]
+  },
+  {
+    "brand": "Wilfred",
+    "name": "Tia Blouse",
+    "desc": "Tied up, not tied down",
+    "fit": "Fit: Classic — follows your contours with a little room",
+    "notes":
+      "Considered tailoring creates a feminine silhouette in luxe fabric from Japan. The tie at the front feels just right for rising temperatures. The custom floral print was designed exclusively for Wilfred. Styled with Wilfred Berdine Short.",
+    "colors": ["DENUDE/BLACK"],
+    "features": [
+      "Fit: Classic — follows your contours with a little room",
+      "Model is\n5'11/180\nwearing a size\nS\n"
+    ],
+    "imageURLs": [
+      "https://aritzia.scene7.com/is/image/Aritzia/hi-res/s18_04_a02_68393_4795_on_a.jpg",
+      "https://aritzia.scene7.com/is/image/Aritzia/hi-res/s18_04_a02_68393_4795_off_a.jpg"
+    ]
+  },
+  {
+    "brand": "Wilfred",
+    "name": "Lilia Blouse",
+    "desc": "Silky crepe with a polished feel",
+    "fit": "Fit: Relaxed — an easy shape that’s just shy of loose",
+    "notes":
+      "This blouse is made with a smooth crepe fabric that hangs beautifully. The wrap silhouette and adjustable tie at the waist make for a flattering fit. Styled with Wilfred Essie Pant.",
+    "colors": ["BLACK", "GOJI BERRY", "OAK", "LAVENDER MIST"],
+    "features": [
+      "Adjustable tie at waist",
+      "Button closure at cuffs",
+      "Fully lined"
+    ],
+    "imageURLs": [
+      "https://aritzia.scene7.com/is/image/Aritzia/hi-res/s18_04_a02_66258_1274_on_a.jpg",
+      "https://aritzia.scene7.com/is/image/Aritzia/hi-res/s18_04_a02_66258_1274_off_a.jpg"
+    ]
+  },
+  {
+    "brand": "Wilfred",
+    "name": "Peaufiner Blouse",
+    "desc": "Vintage-inspired femininity ",
+    "fit": "Fit: Relaxed — an easy shape that’s just shy of loose",
+    "notes":
+      "This blouse is made with a glossy Japanese fabric that glides against your skin. The cropped silhouette and tie front channel a vintage-inspired femininity. Like a '70s movie star, you know?Styled with Wilfred Faun Pant.",
+    "colors": ["BLACK", "APPLE BUTTER"],
+    "features": ["Button placket at cuffs "],
+    "imageURLs": [
+      "https://aritzia.scene7.com/is/image/Aritzia/hi-res/s18_04_a02_64233_13264_off_a.jpg",
+      "https://aritzia.scene7.com/is/image/Aritzia/hi-res/s18_04_a02_64233_13289_on_e.jpg"
+    ]
+  },
+  {
+    "brand": "Wilfred",
+    "name": "Eleanora Blouse",
+    "desc": "Off-the-shoulder in lightweight Japanese crepe",
+    "fit": "Fit: Relaxed — an easy shape that's just shy of loose",
+    "notes":
+      "This blouse is made from lightweight Japanese crepe with a a soft, beautiful drape. A self-tie highlights your waist, while elastic cuffs create a statement sleeve.Styled with Wilfred Talin Pant.",
+    "colors": [
+      "BLACK",
+      "ROEBUCK",
+      "ROW RED",
+      "CABAN",
+      "ALEUTIAN",
+      "CITRICO",
+      "CAMILLE",
+      "WHITE"
+    ],
+    "features": [
+      "Self-tie at waist ",
+      "Elastic neckline for a fit that stays put"
+    ],
+    "imageURLs": [
+      "https://aritzia.scene7.com/is/image/Aritzia/hi-res/s18_04_a02_64229_12269_on_a.jpg",
+      "https://aritzia.scene7.com/is/image/Aritzia/hi-res/s18_04_a02_64229_12269_off_a.jpg"
+    ]
+  }
+]
